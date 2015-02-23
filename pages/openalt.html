@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="../css/style_all.css" rel="stylesheet">
+    <link href="../css/style2.css" rel="stylesheet">
+  </head>
+<body>
+
+<script src="js/three.min.js"></script>
+<script>
+var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 100);
+camera.position.z = 50;
+
+var scene = new THREE.Scene();
+
+var light = new THREE.PointLight();
+light.position.set(0, 20, 50);
+scene.add(light);
+
+var logo = new THREE.Group();
+scene.add(logo);
+
+var renderer = renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+var angle15 = (Math.PI / 180) * 15;
+var extrude = {
+    amount: 1,
+    bevelEnabled: false,
+    curveSegments: 128
+};
+
+function addSegment(from, to, color) {
+    var segment = new THREE.Shape();
+    segment.absarc(0, 0, 21, from, to, true);
+    segment.absarc(0, 0, 10, from, to, false);
+    logo.add(new THREE.Mesh(segment.extrude(extrude), new THREE.MeshPhongMaterial({
+        color: color
+    })));
+}
+
+addSegment(8 * angle15, 4 * angle15, 0x0a504b);
+addSegment(4 * angle15, -3 * angle15, 0x009d91);
+addSegment(-3 * angle15, -13 * angle15, 0x91c2bc);
+
+animate();
+
+function animate() {
+    requestAnimationFrame(animate);
+    logo.rotation.y -= 0.01;
+    renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>

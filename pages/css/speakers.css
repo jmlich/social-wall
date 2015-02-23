@@ -1,0 +1,28 @@
+.speakers > div > img {
+/*  width: 350px; */
+  height: 300px; 
+}
+
+.speakers > div {
+  position: relative;
+  float: left;
+  margin: 10px;
+}
+
+
+.speakers > div > div.name  {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+ /* background-color: rgba(40,40,40,0.7); */
+  background-color: rgba(114, 159, 207, 0.5);
+  color: #ffffff;
+  font-size: 20pt;
+  font-family: serif;
+  padding: 3px 10px 3px 10px;
+  font-family: "source_code_proextralight",Tahoma,"DejaVu Sans",sans-serif;
+  font-weight: normal;
+
+/*  text-align: right; */
+}
+

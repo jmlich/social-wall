@@ -1,0 +1,111 @@
+body {
+  padding: 0px;
+  background-color: #eeeeee;
+  color: #000000;
+}
+.starter-template {
+  text-align: center;
+  padding: 40px 15px;
+}
+
+.container {
+  padding: 40px 0px; 
+}
+ 
+.feed_item {
+  border: solid #aaaaaa 1px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #ffffff;
+}
+
+.feed_avatar {
+  width: 60px;
+  height: 60px;
+  clear: left;
+  float: left;
+}
+.feed_title {
+  float: left;
+  padding-left: 10px;
+}
+.feed_author {
+  font-weight: bold;
+}
+.feed_time {
+}
+.feed_text {
+  clear: left;
+  padding-top: 10px;
+}
+.feed_image {
+  max-width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+}
+
+.feed_type {
+  width: 20px;
+  height: 20px;
+  float: right;
+}
+
+#feed {
+}
+
+#Timer {
+    text-align: center;
+    font-size: 26pt;
+}
+
+#partners_footer img {
+/*  height: 34px; */
+  margin: 5px 10px 5px 10px;
+  text-align: center;
+
+}
+
+#partners_footer {
+display: none;
+  border-top: solid #28292A 1px;
+  vertical-align: middle;
+  height: 44px; 
+  width: 100%;
+  background: none repeat scroll 0 0 white;
+  bottom: 0;
+  position: fixed;
+  text-align: center;
+}
+
+.schedule_item {
+  border: solid #aaaaaa 1px; 
+  margin: 10px; 
+  background-color: #ffffff;
+}
+
+.schedule_item_inner {
+  padding: 10px;
+  border-left: solid #ff0000 10px;
+}
+
+.schedule_time {
+  float: left;
+  vertical-align: middle;
+  text-align: center;
+
+/*  padding-top: 5px; */
+  margin-right: 5px;
+  font-size: 8pt; 
+}
+.schedule-content {
+}
+
+.item_dark {
+ display: none;
+}
+
+.item_light {
+  display: block;
+}

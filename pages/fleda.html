@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="../css/style_all.css" rel="stylesheet">
+    <link href="../css/style2.css" rel="stylesheet">
+    <link href="css/leaflet.css" rel="stylesheet">
+  </head>
+<body>
+    <h1>Party at Fleda tonight</h1>
+
+Klub Fléda <br/>
+Štefánikova 95/24 <br/>
+602 00 Brno <br/>
+
+<br/>
+<img src="http://zxing.org/w/chart?cht=qr&chs=300x300&chld=L&choe=UTF-8&chl=geo%3A49.209849%2C16.603254"/>
+
+
+<div id="map" style="width: 70%; height: 100%; border: 0; margin: 0; position: absolute; right: 0; top:0;" > </div>
+
+ <script src="./js/leaflet.js"></script>
+<script type="text/javascript">
+    map = new L.Map('map');
+    var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var osm = new L.TileLayer(osmUrl, {minZoom:4, maxZoom: 18, attribution: osmAttrib});
+
+    // start the map in South-East England
+    map.setView([49.209849,16.603254], 14);
+    map.addLayer(osm);
+    var marker1 = L.marker([49.226211,16.596886]).addTo(map);
+    var marker2 = L.marker([49.209849,16.603254]).addTo(map);
+
+</script>
+</body>
+</html>

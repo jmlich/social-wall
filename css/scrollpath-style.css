@@ -1,0 +1,64 @@
+body {
+	overflow: hidden;
+}
+.wrapper {
+	position: absolute;
+}
+
+.wrapper > div {
+	position: absolute;
+	background-color: rgba(255,255,255, 0.5);
+	width: 700px;
+	height: 500px; 
+	padding: 0;
+	margin: 0;
+}
+
+
+.sp-canvas {
+	display: none;
+}
+
+#scroll0 { 
+	top: -200px;
+}
+
+#scroll1 {
+	top: 500px;
+	left: 180px;
+}
+
+#scroll2 {
+	top: 1250px;
+	left: 220px;
+}
+
+#scroll3 {
+	top: 1400px;
+	left: 1500px;
+}
+
+#scroll4 {
+	left: 2325px;
+	top: 450px;
+	transform: rotate(-90deg);
+}
+
+#scroll5 {
+
+	left: 1800px;
+	top: 450px;
+	transform: rotate(90deg);
+}
+
+#scroll6 {
+	left: 2000px;
+	top: -900px;
+	transform: rotate(90deg);
+}
+
+#scroll7 {
+	left: 1000px;
+	top: -1050px;
+	transform: rotate(90deg);
+}
