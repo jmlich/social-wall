@@ -8,12 +8,11 @@ body {
 .wrapper > div {
 	position: absolute;
 	background-color: rgba(255,255,255, 0.5);
-	width: 700px;
-	height: 500px; 
+	width: 800px;
+	height: 500px;
 	padding: 0;
 	margin: 0;
 }
-
 
 .sp-canvas {
 	display: none;

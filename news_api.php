@@ -41,19 +41,38 @@ function set_config_value($key, $value) {
   }
 }
 
+function get_cache($images = NULL, $limit = 32) {
+  global $db;
+  $limit_str = (isset($limit) ? sprintf("LIMIT %d", $limit) : "");
+  if (isset($images)) {
+    $query = "SELECT *, UNIX_TIMESTAMP(time) as time FROM `feed` WHERE `image` != '' ORDER BY `time` DESC ".$limit_str;
+  } else {
+    $query = "SELECT *, UNIX_TIMESTAMP(time) as time FROM `feed` ORDER BY `time` DESC ".$limit_str;
+  }
+  if (!($result = mysqli_query($db, $query))) {
+    throw new Exception(mysqli_error($db));
+  }
+  $feed_cache = array();
+  while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+    array_push($feed_cache, $row);
+  }
+  return $feed_cache;
+}
+
 function get_news($services, $params, $info) {
   global $db, $config;
 
   $config_sha = sha1(json_encode($config));
   $config_sha_old = get_config_value('config_sha', '');
   $force_refresh = false;
+
   if ($config_sha != $config_sha_old) {
 /*
     $query = "TRUNCATE `feed`";
     if (!($result = mysqli_query($db, $query))) {
       throw new Exception(mysqli_error($db));
     }
-    */
+*/
     set_config_value('config_sha', $config_sha);
     $force_refresh = true;
   }
@@ -164,6 +183,9 @@ function download_news($services, $params) {
       break;
       case 'foursquare':
         $items = download_foursquare_fit($service, $params);
+      break;
+      case 'fedmsg':
+        $items = download_fedmsg($service, $params);
       break;
       default:
         throw new Exception('Unknown service '.print_r($service, true));
@@ -492,7 +514,7 @@ function download_instagram_hashtag($service, $params) {
   $instagram = new Instagram($service['auth']);
   $array = array();
 
-  $result = $instagram->getTagMedia($service['value']);
+  $result = $instagram->getTagMedia($service['value'], $service['count']);
   foreach ($result->data as $media) {
     array_push($array, array(
       'type'   => $service['type'],
@@ -630,5 +652,75 @@ function download_foursquare_fit($service, $params) {
 
   return $array;
 }
+
+function download_fedmsg($service, $params) {
+
+  $url = "https://apps.fedoraproject.org/datagrepper/raw";
+  $url .= "?topic=".urlencode($service['topic']);
+  $url .= "&delta=".urlencode($service['delta']);
+
+  $stream_context = stream_context_create(
+    array(
+      'ssl' => array(
+        'verify_peer' => FALSE,
+      )
+    )
+  );
+  
+  $response = json_decode(file_get_contents($url, NULL, $stream_context), true);
+  $array = array();
+
+//  echo "<pre>".print_r($response,true)."</pre>";
+
+  switch ($service['topic']) {
+    case 'org.fedoraproject.prod.fedbadges.badge.award':
+      foreach ($response['raw_messages'] as $msg) {
+      array_push($array, array(
+        'type'   => $service['type'],
+        'avatar' => 'http://cdn.libravatar.org/avatar/'.hash('sha256', $msg['msg']['user']['username'].'@fedoraproject.org').'?s=64&d=retro',
+        'author' => $msg['msg']['user']['username'],
+        'text' => $msg['msg']['badge']['description'],
+        'image' => $msg['msg']['badge']['image_url'],
+        'link'   => 'https://badges.fedoraproject.org/user/'.$msg['msg']['user']['username'],
+        'time' => (int)$msg['timestamp'],
+      ));
+      }
+    break;
+    case 'org.fedoraproject.prod.planet.post.new':
+      foreach ($response['raw_messages'] as $msg) {
+//unset($msg['certificate']);
+//unset($msg['msg']['post']['content'][0]['value']);
+//    echo "<pre>".print_r($msg,true)."</pre>";
+      array_push($array, array(
+        'type'   => $service['type'],
+        'avatar' => $msg['msg']['face'],
+        'author' => $msg['msg']['name'],
+        'text' => isset($msg['msg']['post']['summary']) ? $msg['msg']['post']['summary'] : '',
+        'image' => '',
+        'link'   => $msg['msg']['post']['link'],
+        'time' => (int)$msg['timestamp'],
+      ));
+      }
+    break;
+
+  }
+
+
+  return $array;
+/*
+$hash = '25378dff2daf6f09dc3c86e0a6246eac371b6216e5558740173eacba0b432179';
+echo $hash ."<br/>";
+$url = 'http://cdn.libravatar.org/avatar/'.$hash.'?s=64&d=retro';
+echo "<img src=\"$url\">";
+$hash= hash('sha256','jmlich@fedoraproject.org');
+$url = 'http://cdn.libravatar.org/avatar/'.$hash.'?s=64&d=retro';
+echo $hash ."<br/>";
+echo "<img src=\"$url\">";
+
+exit();
+  return array();
+  */
+}
+
 
 ?>

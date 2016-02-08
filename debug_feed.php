@@ -5,8 +5,11 @@
 $now = date('H:i:s');
 
 //$feed = get_news(  $config['news'], array('lang' => 'cs'), $config['news_info'] );
-$feed = download_news(  $config['news'], array('lang' => 'cs'), $config['news_info'] );
-$feed = array_reverse($feed);
+
+//$feed = download_news(  $config['news'], array('lang' => 'cs'), $config['news_info'] );
+//$feed = array_reverse($feed);
+
+$feed = get_cache();
 
 $content = <<<EOF
 

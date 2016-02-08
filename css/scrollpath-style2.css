@@ -15,6 +15,10 @@
   text-shadow: 5px 5px 10px #000000,-5px -5px 10px #000000; 
 }
 
+.feed_item a {
+  color: #ffff00;
+}
+
 .feed_avatar {
   margin: 10px;
   width: 100px;
@@ -28,11 +32,12 @@
 .feed_time {
   margin: 5px;
   float: left;
+  font-size: 34px;
 }
 
 .feed_text {
   margin: 10px;
-  font-size: 28px;
+  font-size: 45px;
 /*  font-style: italic; */
   font-family: "Open Sans",sans-serif;
 /*  font-weight: lighter;*/

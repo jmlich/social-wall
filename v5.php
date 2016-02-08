@@ -80,7 +80,7 @@ function pad2(i) {
 }
 
 function downloadFeed() {
-  $.get( "./news_api_json.php", function( data ) {
+  $.get( "./news_api_json.php?images=1", function( data ) {
     var maxOne = 0;
     $.each(data, function( index, item ) {
       if ((item.image !== undefined) && (item.image !== '')) {

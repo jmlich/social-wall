@@ -82,6 +82,7 @@ function pad2(i) {
 function downloadFeed() {
   $.get( "./news_api_json.php", function( data ) {
     var maxOne = 0;
+        news_feed_cache = [];
     $.each(data, function( index, item ) {
       if (maxTime < item.time) {
         news_feed_cache.push(item);

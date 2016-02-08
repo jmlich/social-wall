@@ -19,8 +19,8 @@ $content = <<<EOF
 </div>
 
 <div class="col-sm-4" role="main">
-  <img src="./img/logo-transparent.png" class="logo item_dark"/>
-  <img src="./img/logo-transparent2.png" class="logo item_light"/>
+  <img src="./img/devconf_logo_square.png" class="logo item_dark"/>
+  <img src="./img/devconf_logo_square.png" class="logo item_light"/>
 
 
   <div id="Timer">$now</div>
@@ -68,6 +68,7 @@ function pad2(i) {
 function downloadFeed() {
   $.get( "./news_api_json.php", function( data ) {
     var maxOne = 0;
+    data.reverse();
     $.each(data, function( index, item ) {
       if (maxTime < item.time) {
         var itemId = "feedItem"+lastId;
